@@ -27,8 +27,6 @@ public class Course implements java.io.Serializable{
 	
 	
 	
-	private Set<Teacher> teachers;
-	
 	
 	private Set<Student> students;
 	
