@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.edu.agh.ki.mwo.model.School;
-import pl.edu.agh.ki.mwo.model.SchoolClass;
+import pl.edu.agh.ki.mwo.model.DegreeCourse;
+import pl.edu.agh.ki.mwo.model.Group;
 import pl.edu.agh.ki.mwo.persistence.DatabaseConnector;
 
 @Controller
@@ -44,7 +44,7 @@ public class SchoolClassesController {
     	if (session.getAttribute("userLogin") == null)
     		return "redirect:/Login";
     	
-    	SchoolClass schoolClass = new SchoolClass();
+    	Group schoolClass = new Group();
     	schoolClass.setStartYear(Integer.valueOf(startYear));
     	schoolClass.setCurrentYear(Integer.valueOf(currentYear));
     	schoolClass.setProfile(profile);

@@ -5,8 +5,8 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="schools")
-public class School implements java.io.Serializable {
+@Table(name="degreeCourses")
+public class DegreeCourse implements java.io.Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -16,18 +16,18 @@ public class School implements java.io.Serializable {
 	private String name;
 	
 	@Column
-	private String address;
+	private String year;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="school_id")
-	private Set<SchoolClass> classes;
+	private Set<Group> groups;
 
-	public School() {
-		classes = new HashSet<SchoolClass>();
+	public DegreeCourse() {
+		groups = new HashSet<Group>();
 	}
 
-	public void addClass(SchoolClass newClass) {
-		classes.add(newClass);
+	public void addGroup(Group newGroup) {
+		groups.add(newGroup);
 	}
 
 	public long getId() {
@@ -38,12 +38,12 @@ public class School implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public void setClasses(Set<SchoolClass> classes) {
-		this.classes = classes;
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
 	}
 
-	public Set<SchoolClass> getClasses() {
-		return classes;
+	public Set<Group> getGroups() {
+		return groups;
 	}
 
 	public String getName() {
@@ -54,16 +54,16 @@ public class School implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getYear() {
+		return year;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setYear(String year) {
+		this.year = year;
 	}
 	
 	public String toString() {
-		return "School: " + getName() + " (" + getAddress() + ", " + getClasses().size() + " classes)";
+		return "DegreeCourse: " + getName() + " (" + getYear() + ", " + getGroups().size() + " groups)";
 }
 
 }

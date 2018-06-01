@@ -6,8 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import pl.edu.agh.ki.mwo.model.School;
-import pl.edu.agh.ki.mwo.model.SchoolClass;
+import pl.edu.agh.ki.mwo.model.DegreeCourse;
+import pl.edu.agh.ki.mwo.model.Group;
 import pl.edu.agh.ki.mwo.model.Student;
 
 public class DatabaseConnector {
@@ -33,33 +33,33 @@ public class DatabaseConnector {
 		instance = null;
 	}
 	
-	public Iterable<School> getSchools() {
-		String hql = "FROM School";
+	public Iterable<DegreeCourse> getSchools() {
+		String hql = "FROM DegreeCourse";
 		Query query = session.createQuery(hql);
 		List schools = query.list();
 		
 		return schools;
 	}
 	
-	public void addSchool(School school) {
+	public void addSchool(DegreeCourse school) {
 		Transaction transaction = session.beginTransaction();
 		session.save(school);
 		transaction.commit();
 	}
 	
 	public void deleteSchool(String schoolId) {
-		String hql = "FROM School S WHERE S.id=" + schoolId;
+		String hql = "FROM DegreeCourse S WHERE S.id=" + schoolId;
 		Query query = session.createQuery(hql);
-		List<School> results = query.list();
+		List<DegreeCourse> results = query.list();
 		Transaction transaction = session.beginTransaction();
-		for (School s : results) {
+		for (DegreeCourse s : results) {
 			session.delete(s);
 		}
 		transaction.commit();
 	}
 
-	public Iterable<SchoolClass> getSchoolClasses() {
-		String hql = "FROM SchoolClass";
+	public Iterable<Group> getSchoolClasses() {
+		String hql = "FROM Group";
 		Query query = session.createQuery(hql);
 		List schoolClasses = query.list();
 		
@@ -68,27 +68,27 @@ public class DatabaseConnector {
 	
 	
 	
-	public void addSchoolClass(SchoolClass schoolClass, String schoolId) {
-		String hql = "FROM School S WHERE S.id=" + schoolId;
+	public void addSchoolClass(Group schoolClass, String schoolId) {
+		String hql = "FROM DegreeCourse S WHERE S.id=" + schoolId;
 		Query query = session.createQuery(hql);
-		List<School> results = query.list();
+		List<DegreeCourse> results = query.list();
 		Transaction transaction = session.beginTransaction();
 		if (results.size() == 0) {
 			session.save(schoolClass);
 		} else {
-			School school = results.get(0);
-			school.addClass(schoolClass);
+			DegreeCourse school = results.get(0);
+			school.addGroup(schoolClass);
 			session.save(school);
 		}
 		transaction.commit();
 	}
 	
 	public void deleteSchoolClass(String schoolClassId) {
-		String hql = "FROM SchoolClass S WHERE S.id=" + schoolClassId;
+		String hql = "FROM Group S WHERE S.id=" + schoolClassId;
 		Query query = session.createQuery(hql);
-		List<SchoolClass> results = query.list();
+		List<Group> results = query.list();
 		Transaction transaction = session.beginTransaction();
-		for (SchoolClass s : results) {
+		for (Group s : results) {
 			session.delete(s);
 		}
 		transaction.commit();
@@ -111,14 +111,14 @@ public class DatabaseConnector {
 	}
 	
 	public void addStudent(Student student, String schoolClassId) {
-		String hql = "FROM SchoolClass S WHERE S.id=" + schoolClassId;
+		String hql = "FROM Group S WHERE S.id=" + schoolClassId;
 		Query query = session.createQuery(hql);
-		List<SchoolClass> results = query.list();
+		List<Group> results = query.list();
 		Transaction transaction = session.beginTransaction();
 		if (results.size() == 0) {
 			session.save(student);
 		} else {
-			SchoolClass schoolClass = results.get(0);
+			Group schoolClass = results.get(0);
 			schoolClass.addStudent(student);
 			session.save(schoolClass);
 		}
@@ -126,14 +126,14 @@ public class DatabaseConnector {
 	}
 	
 	public void saveModifiedStudent(Student student, String schoolClassId) {
-		String hql = "FROM SchoolClass S WHERE S.id=" + schoolClassId;
+		String hql = "FROM Group S WHERE S.id=" + schoolClassId;
 		Query query = session.createQuery(hql);
-		List<SchoolClass> results = query.list();
+		List<Group> results = query.list();
 		Transaction transaction = session.beginTransaction();
 		if (results.size() == 0) {
 			session.save(student);
 		} else {
-			SchoolClass schoolClass = results.get(0);
+			Group schoolClass = results.get(0);
 			schoolClass.addStudent(student);
 			session.save(schoolClass);
 		}
@@ -142,9 +142,9 @@ public class DatabaseConnector {
 	
 	
 	public long getSpecificStudentClass(String studentId) {
-		String hql = "SELECT S FROM SchoolClass S  INNER JOIN S.students student WHERE student.id="+studentId;
+		String hql = "SELECT S FROM Group S  INNER JOIN S.students student WHERE student.id="+studentId;
 		Query query = session.createQuery(hql);
-		SchoolClass sclass = (SchoolClass) query.list().get(0);
+		Group sclass = (Group) query.list().get(0);
 		return sclass.getId();
 	}
 

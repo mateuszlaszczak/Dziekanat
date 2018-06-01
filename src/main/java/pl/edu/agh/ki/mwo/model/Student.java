@@ -16,8 +16,18 @@ public class Student implements java.io.Serializable {
 	@Column
 	private String surname;
 	
+	
 	@Column
-	private String pesel;
+	private String adress;
+	
+	@Column
+	private String dateOfBirth;
+	
+	
+	@Column
+	private int year;
+	
+	
 	
 	public long getId() {
 		return id;
@@ -47,12 +57,30 @@ public class Student implements java.io.Serializable {
 		this.surname = surname;
 	}
 
-	public String getPesel() {
-		return pesel;
+	public String getAdress() {
+		return adress;
 	}
 
-	public void setPesel(String pesel) {
-		this.pesel = pesel;
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+
 	
 }

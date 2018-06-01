@@ -41,7 +41,7 @@ public class Teacher implements java.io.Serializable {
 			joinColumns=@JoinColumn(name="teacher_id"),
 			inverseJoinColumns=@JoinColumn(name="class_id")
 			)
-	private List<SchoolClass> classes;
+	private List<Group> classes;
 	
 
 	public String getName() {
@@ -68,11 +68,11 @@ public class Teacher implements java.io.Serializable {
 		this.email = email;
 	}
 
-	public List<SchoolClass> getClasses() {
+	public List<Group> getClasses() {
 		return classes;
 	}
 
-	public void setClasses(List<SchoolClass> classes) {
+	public void setClasses(List<Group> classes) {
 		this.classes = classes;
 	}
 
@@ -87,9 +87,9 @@ public class Teacher implements java.io.Serializable {
 		this.email = email;
 	}
 	
-	public void addSchoolClass(SchoolClass schoolClass) {
+	public void addSchoolClass(Group schoolClass) {
 		if(classes==null) {
-			classes=new ArrayList<SchoolClass>();
+			classes=new ArrayList<Group>();
 		}
 		
 		classes.add(schoolClass);
