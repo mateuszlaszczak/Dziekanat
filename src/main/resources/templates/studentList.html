@@ -11,12 +11,17 @@
     	<div th:include="menuFragment" ></div>
 		<br/><Br/>
 		<table border="1" cellpadding="5">
-			<tr><th>Id</th><th>Imie</th><th>Nazwisko</th><th>Pesel</th><th>Modyfikcja</th><th>Usun</th></tr>
+			<tr><th>Id</th><th>Imie</th><th>Nazwisko</th><th>Adres</th><th>Data Urodzenia</th><th>Rok Studiów</th><th>Grupa Dziekanatowa</th><th>Kierunek Studiów</th><th>Modyfikuj</th><th>Usun</th><th>Pokaz oceny</th></tr>
 			<tr th:each="student: ${students}">
 				<td><span th:text="${student.id}" /></td>
 				<td><span th:text="${student.name}" /></td>
 				<td><span th:text="${student.surname}" /></td>
-				<td><span th:text="${student.pesel}" /></td>
+				<td><span th:text="${student.adress}" /></td>
+				<td><span th:text="${student.dateOfBirth}" /></td>
+				<td><span th:text="${student.year}" /></td>
+				<td><span th:text="${student.studentGroup.name}" /></td>
+				<td><span th:text="${student.studentGroup.degreeCourse.name}" /></td>
+				<!-- <td><span th:text="none"/></td> -->
 
 		        <td>
 		            <form action="ModifyStudent" method="POST">
@@ -27,13 +32,19 @@
 		        <td>
 		            <form action="DeleteStudent" method="POST">
 		            	<input type="hidden" name="studentId" th:value="${student.id}" />
-		                <button type="submit">X</button>
+		                <button type="submit">Usun</button>
+		            </form>
+				</td>
+				<td>
+		            <form action="ShowMarks" method="POST">
+		            	<input type="hidden" name="studentId" th:value="${student.id}" />
+		                <button type="submit">Pokaz Oceny</button>
 		            </form>
 		        </td>
 			</tr>
 		
 		
-		</table><br/><a href='AddStudent'>dodaj studenta</a><br/><br/>
+		</table><br/><a href='AddStudent'>Dodaj studenta</a><br/><br/>
 		
     </div>
 

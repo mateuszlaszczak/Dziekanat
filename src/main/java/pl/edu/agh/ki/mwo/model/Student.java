@@ -6,9 +6,13 @@ import javax.persistence.*;
 @Table(name="students")
 public class Student implements java.io.Serializable {
 	
+	public Student() {
+		
+	}
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	
 	@Column
 	private String name;
@@ -27,18 +31,19 @@ public class Student implements java.io.Serializable {
 	@Column
 	private int year;
 	
+	@ManyToOne(cascade = {CascadeType.MERGE,
+			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	@JoinColumn(name = "group_id")
+	private StudentGroup studentGroup;
 	
 	
-	public long getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Student() {
-		
 	}
 
 	public String getName() {
@@ -81,6 +86,19 @@ public class Student implements java.io.Serializable {
 		this.year = year;
 	}
 
+	public StudentGroup getStudentGroup() {
+		return studentGroup;
+	}
+
+	public void setStudentGroup(StudentGroup studentGroup) {
+		this.studentGroup = studentGroup;
+	}
+	
+	
+	
+
+
+	
 
 	
 }

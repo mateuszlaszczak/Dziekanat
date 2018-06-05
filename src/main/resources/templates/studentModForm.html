@@ -11,17 +11,20 @@
 						<!-- <tr><td></td><td><input type="text" name="studentId" th:value="${studentId}" /></td></tr> -->
 						<tr><td>Imie:</td><td><input type="text" name="studentName" th:value="${studentName}"/></td></tr>
 						<tr><td>Nazwisko:</td><td><input type="text" name="studentSurname" th:value="${studentSurname}" /></td></tr>
-						<tr><td>pesel:</td><td><input type="text" name="studentPesel" th:value="${studentPesel}" /></td></tr>
-						<tr><td>klasa:</td><td><select class="form-control" name="schoolClassStudent" id="schoolClassStudent">
-											    <option value="-1">---</option>
-											    <!-- <option th:value="${schoolClassStudent}</option> -->
-											    <option th:each="schoolClass: ${schoolClasses}" th:value="${schoolClass.id}" th:text="${schoolClass.profile} + ', ' + ${schoolClass.currentYear}"></option>
+						<tr><td>Adres:</td><td><input type="text" name="studentAdress" th:value="${studentAdress}" /></td></tr>
+						<tr><td>Data urodzenia:</td><td><input type="text" name="studentDateOfBirth" th:value="${studentDateOfBirth}" /></td></tr>
+						<tr><td>Rok studiów:</td><td><input type="text" name="studentYear" th:value="${studentYear}" /></td></tr>
+						<tr><td>Grupa Dziekanatowa:</td><td><select class="form-control" name="studentDegreeGroupName" id="studentDegreeGroupName">
+							<option value="-1">---</option>
+							<!-- <option th:value="${schoolClassStudent}</option> -->
+							<!-- <option selected="hidden" th:value="${studentDegreeCourseName.id}" th:text="${studentDegreeCourseName.name}"></option> -->
+							<option th:each="studentGroup: ${studentGroups}" th:value="${studentGroup.id}" th:text="${studentGroup.name}"></option>
 											    </select></td></tr>
 					</table><br/><BR/>
 					<!-- <input type="submit" value="Zapisz zmiany"/> -->
 					
 					    <!-- <form action="DeleteStudent" method="POST"> -->
-		            	<input type="hidden" name="studentId" th:value="${studentId}" />
+						<input type="hidden" name="studentId" th:value="${studentId}" />
 		                <button type="submit">Zapisz zmiany</button>
 		            <!--  </form>-->
 				</form>

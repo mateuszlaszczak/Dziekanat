@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="degreeCourses")
@@ -18,16 +19,16 @@ public class DegreeCourse implements java.io.Serializable {
 	@Column
 	private String year;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="school_id")
-	private Set<Group> groups;
+	@OneToMany(mappedBy="degreeCourse",cascade= {CascadeType.MERGE,
+			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	private Set <StudentGroup> studGroups;
 
 	public DegreeCourse() {
-		groups = new HashSet<Group>();
+		studGroups= new HashSet<StudentGroup>();
 	}
 
-	public void addGroup(Group newGroup) {
-		groups.add(newGroup);
+	public void addGroup(StudentGroup newGroup) {
+		studGroups.add(newGroup);
 	}
 
 	public long getId() {
@@ -38,12 +39,12 @@ public class DegreeCourse implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	public void setGroups(Set<StudentGroup> groups) {
+		this.studGroups = groups;
 	}
 
-	public Set<Group> getGroups() {
-		return groups;
+	public Set<StudentGroup> getGroups() {
+		return studGroups;
 	}
 
 	public String getName() {
@@ -65,5 +66,16 @@ public class DegreeCourse implements java.io.Serializable {
 	public String toString() {
 		return "DegreeCourse: " + getName() + " (" + getYear() + ", " + getGroups().size() + " groups)";
 }
+	
+	public void addStudentGroup(StudentGroup schoolClass) {
+		if(studGroups==null) {
+			studGroups=new HashSet<StudentGroup>();
+			studGroups.add(schoolClass);
+			schoolClass.setDegreeCourse(this);
+		}else {
+			studGroups.add(schoolClass);
+			schoolClass.setDegreeCourse(this);
+		}
+	}
 
 }
