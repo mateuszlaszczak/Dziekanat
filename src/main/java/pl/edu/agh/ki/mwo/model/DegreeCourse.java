@@ -19,8 +19,7 @@ public class DegreeCourse implements java.io.Serializable {
 	@Column
 	private String year;
 	
-	@OneToMany(mappedBy="degreeCourse",cascade= {CascadeType.MERGE,
-			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	@OneToMany(mappedBy="degreeCourse",cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	private Set <StudentGroup> studGroups;
 
 	public DegreeCourse() {

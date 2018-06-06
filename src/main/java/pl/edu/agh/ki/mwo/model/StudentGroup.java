@@ -21,10 +21,11 @@ public class StudentGroup implements java.io.Serializable {
 	@Column
 	private String name;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE,
-			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumn(name = "degreeCourse_id")
 	private DegreeCourse degreeCourse;
+	
+	
 	
 	public DegreeCourse getDegreeCourse() {
 		return degreeCourse;
@@ -35,8 +36,6 @@ public class StudentGroup implements java.io.Serializable {
 	}
 
 	public StudentGroup() {
-		
-		studList = new HashSet<>();
 		
 	}
 	
@@ -64,8 +63,8 @@ public class StudentGroup implements java.io.Serializable {
 		this.studList = studList;
 	}
 
-	@OneToMany(mappedBy="studentGroup",cascade= {CascadeType.MERGE,
-			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH,CascadeType.REMOVE,CascadeType.ALL}, mappedBy="studentGroup")
+//	@JoinColumn(name = "group_id")
 	private Set <Student> studList;
 	
 	
@@ -90,25 +89,25 @@ public class StudentGroup implements java.io.Serializable {
 //			)
 //	private Set<Course> courses;
 	
-//	public void addStudent(Student student) {
-//		if(studList==null) {
-//			System.out.println("Set jest pusty");
-//			studList = new HashSet<>();
-//			studList.add(student);
-//			student.setStudentGroup(this);
-//		}else {
-//			System.out.println("Set nie jest pusty");
-//			studList.add(student);
-//			student.setStudentGroup(this);
-//		}
-//		
-//		
-//	}
-	
 	public void add(Student student) {
-		studList.add(student);
-
+		if(studList==null) {
+			System.out.println("Set jest pusty");
+			studList = new HashSet<>();
+			studList.add(student);
+			student.setStudentGroup(this);
+		}else {
+			System.out.println("Set nie jest pusty");
+			System.out.println(studList.size());
+			studList = new HashSet<>();
+			studList.add(student);
+			System.out.println(studList.size());
+			student.setStudentGroup(this);
+		}
+		
+		
 	}
+	
+
 
 
 

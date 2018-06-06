@@ -12,10 +12,13 @@
 		<property name="connection.username"></property>
 		<property name="connection.password"></property>
 	
-		<property name="current_session_context_class">thread</property>
+		<!-- <property name="current_session_context_class">thread</property> -->
 		<mapping class="pl.edu.agh.ki.mwo.model.Student"/>
 		<mapping class="pl.edu.agh.ki.mwo.model.StudentGroup"/>
 		<mapping class="pl.edu.agh.ki.mwo.model.DegreeCourse"/>
+		<mapping class="pl.edu.agh.ki.mwo.model.Grade"/>
+		<mapping class="pl.edu.agh.ki.mwo.model.Teacher"/>
+		<mapping class="pl.edu.agh.ki.mwo.model.Course"/>
 		
 	</session-factory>
 </hibernate-configuration>

@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+
+
+
+    <span layout:fragment="pageTitle"> - Uczniowie </span>
+
+    <div layout:fragment="content">
+    	<div th:include="menuFragment" ></div>
+		<br/><Br/>
+		<table border="1" cellpadding="5">
+			<tr><th>Nazwa Przedmiotu</th><th>Prowadzacy</th><th>Ocena</th></tr>
+			<tr th:each="grade: ${grades}">
+				<td><span th:text="${grade.course.name}" /></td>
+				<td><span th:text="${grade.course.teacher.name+' '+grade.course.teacher.surname}" /></td>
+				<td><span th:text="${grade.mark}" /></td>
+				<!-- <td><span th:text="none"/></td> -->
+			</tr>
+		
+		
+		</table><br/><a href='AddGrade'>Dodaj ocene</a><br/><br/>
+		
+    </div>
+
+</body>
+</html>

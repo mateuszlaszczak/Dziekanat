@@ -5,10 +5,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,11 +26,20 @@ public class Course implements java.io.Serializable{
 	@Column
 	private String name;
 	
-	@Column
-	private String teacher;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacher_id",nullable=true)
+	private Teacher teacher;
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 
 	public int getId() {
 		return Id;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
 	public void setId(int id) {
@@ -43,13 +54,7 @@ public class Course implements java.io.Serializable{
 		this.name = name;
 	}
 
-	public String getTeacher() {
-		return teacher;
-	}
 
-	public void setTeacher(String teacher) {
-		this.teacher = teacher;
-	}
 	
 	
 	

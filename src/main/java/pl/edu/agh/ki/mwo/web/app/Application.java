@@ -2,6 +2,7 @@ package pl.edu.agh.ki.mwo.web.app;
 
 
 import javax.annotation.PreDestroy;
+import javax.xml.crypto.Data;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,7 +22,6 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-//        DatabaseConnector.getInstance().getStudents();
     }
 
     

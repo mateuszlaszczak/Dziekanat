@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.edu.agh.ki.mwo.model.StudentGroup;
 import pl.edu.agh.ki.mwo.model.DegreeCourse;
+import pl.edu.agh.ki.mwo.model.Grade;
 import pl.edu.agh.ki.mwo.model.Student;
 import pl.edu.agh.ki.mwo.persistence.DatabaseConnector;
 @Controller
@@ -25,6 +26,7 @@ public class StudentController {
         return "studentList";    
     }
 	
+
 	
     
     @RequestMapping(value="/AddStudent")
@@ -56,6 +58,16 @@ public class StudentController {
     	model.addAttribute("studentGroups", DatabaseConnector.getInstance().getGroupBasedOnCourseDagree(student.getStudentGroup().getDegreeCourse().getId()));
         
     	return "studentModForm";
+    }
+    
+    @RequestMapping(value="/showGrades")
+   public String showMarks(@RequestParam(value="studentId", required=false) String studentId, 
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	model.addAttribute("grades", DatabaseConnector.getInstance().getGrades(studentId));
+    	return "studentGrades";
     }
 //    
     @RequestMapping(value="/SaveStudent", method=RequestMethod.POST)
@@ -107,13 +119,8 @@ public class StudentController {
     	
     	
     	
-    	Student student = new Student();
+    	Student student = new Student(name, surname, adress, dateOfBirth, year);
     	
-    	student.setName(name);
-    	student.setSurname(surname);
-    	student.setAdress(adress);
-    	student.setDateOfBirth(dateOfBirth);
-    	student.setYear(year);
     	
     	System.out.println("Aj DI: " +studentGroupId);
     	DatabaseConnector.getInstance().addStudent(student, studentGroupId);

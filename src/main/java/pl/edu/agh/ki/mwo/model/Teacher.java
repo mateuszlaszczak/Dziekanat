@@ -1,6 +1,7 @@
 package pl.edu.agh.ki.mwo.model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,16 +34,8 @@ public class Teacher implements java.io.Serializable {
 	@Column(name="email")
 	private String email;
 	
-	
-	@ManyToMany(cascade= {CascadeType.MERGE,
-						CascadeType.MERGE,CascadeType.PERSIST,
-						CascadeType.REFRESH})
-	@JoinTable(
-			name="teacher_class", 
-			joinColumns=@JoinColumn(name="teacher_id"),
-			inverseJoinColumns=@JoinColumn(name="class_id")
-			)
-	private List<StudentGroup> classes;
+	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "teacher")
+	Set<Course> courses;
 	
 
 	public String getName() {
@@ -68,13 +62,7 @@ public class Teacher implements java.io.Serializable {
 		this.email = email;
 	}
 
-	public List<StudentGroup> getClasses() {
-		return classes;
-	}
 
-	public void setClasses(List<StudentGroup> classes) {
-		this.classes = classes;
-	}
 
 	public Teacher() {
 
@@ -87,13 +75,7 @@ public class Teacher implements java.io.Serializable {
 		this.email = email;
 	}
 	
-	public void addSchoolClass(StudentGroup schoolClass) {
-		if(classes==null) {
-			classes=new ArrayList<StudentGroup>();
-		}
-		
-		classes.add(schoolClass);
-	}
+
 
 	
 	

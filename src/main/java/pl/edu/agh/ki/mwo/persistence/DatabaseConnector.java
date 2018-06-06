@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import pl.edu.agh.ki.mwo.model.DegreeCourse;
+import pl.edu.agh.ki.mwo.model.Grade;
 import pl.edu.agh.ki.mwo.model.StudentGroup;
 import pl.edu.agh.ki.mwo.model.Student;
 
@@ -51,6 +52,8 @@ public class DatabaseConnector {
 		List<DegreeCourse> results = query.list();
 		return results.get(0);
 	}
+	
+	
 	
 	
 	
@@ -157,12 +160,13 @@ public class DatabaseConnector {
 		} else {
 			StudentGroup schoolClass = results.get(0);
 			schoolClass.add(student);
+			session.save(student);
 			session.save(schoolClass);
-			System.out.println("Dane zostaly zapisane");
 		}
-		transaction.commit();
+		session.getTransaction().commit();
 		System.out.println("Do widzenia");
 	}
+	
 //	
 	public void saveModifiedStudent(Student student, String schoolClassId, String degreeCourseId) {
 		String hql = "FROM StudentGroup S WHERE S.id=" + schoolClassId;
@@ -173,8 +177,6 @@ public class DatabaseConnector {
 			session.save(student);
 		} else {
 			StudentGroup schoolClass = results.get(0);
-			
-			schoolClass.add(student);
 			session.save(schoolClass);
 	
 		transaction.commit();
@@ -199,6 +201,13 @@ public class DatabaseConnector {
 			session.delete(s);
 		}
 		transaction.commit();
+	}
+	
+	public Iterable<Grade> getGrades(String studentId) {
+		String hql = "SELECT S FROM Grade S INNER JOIN S.student stud WHERE stud.id="+studentId;
+		Query query = session.createQuery(hql);
+		List <Grade> grades = query.list();
+		return grades;
 	}
 
 

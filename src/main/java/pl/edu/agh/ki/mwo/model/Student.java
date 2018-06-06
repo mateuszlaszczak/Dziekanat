@@ -1,4 +1,6 @@
 package pl.edu.agh.ki.mwo.model;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @SuppressWarnings("serial")
@@ -10,6 +12,17 @@ public class Student implements java.io.Serializable {
 		
 	}
 	
+	public Student(String name, String surname, String adress, String dateOfBirth, int year) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.adress = adress;
+		this.dateOfBirth = dateOfBirth;
+		this.year = year;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -31,10 +44,15 @@ public class Student implements java.io.Serializable {
 	@Column
 	private int year;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE,
-			  CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumn(name = "group_id")
 	private StudentGroup studentGroup;
+	
+	
+	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "student")
+	Set<Grade> grades;
+	
+
 	
 	
 
