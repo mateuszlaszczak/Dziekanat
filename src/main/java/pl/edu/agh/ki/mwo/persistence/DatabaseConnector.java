@@ -6,9 +6,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import pl.edu.agh.ki.mwo.model.Course;
 import pl.edu.agh.ki.mwo.model.DegreeCourse;
 import pl.edu.agh.ki.mwo.model.Grade;
 import pl.edu.agh.ki.mwo.model.StudentGroup;
+import pl.edu.agh.ki.mwo.model.Teacher;
 import pl.edu.agh.ki.mwo.model.Student;
 
 public class DatabaseConnector {
@@ -129,12 +131,6 @@ public class DatabaseConnector {
 		String hql = "FROM Student";
 		Query query = session.createQuery(hql);
 		List <Student> students = query.list();
-		
-		for (Student stu: students) {
-			System.out.println(stu.getStudentGroup().getDegreeCourse());
-			
-		}
-		
 		return students;
 	}
 	
@@ -164,7 +160,6 @@ public class DatabaseConnector {
 			session.save(schoolClass);
 		}
 		session.getTransaction().commit();
-		System.out.println("Do widzenia");
 	}
 	
 //	
@@ -211,8 +206,22 @@ public class DatabaseConnector {
 	}
 
 
+	//Teachers
+	public Iterable<Teacher> getTeachers() {
+		String hql = "FROM Teacher";
+		Query query = session.createQuery(hql);
+		List <Teacher> teachers = query.list();
+		return teachers;
+	}
 
-
+	public Iterable<Course> getTeacherCourse(String teacherId) {
+		String hql = "SELECT S FROM Course INNER JOIN S.teacher teach WHERE teach.id = 1";
+		Query query = session.createQuery(hql);
+		List <Course> courses = query.list();
+		return courses;
+	}
+	
+	
 }
 
 

@@ -45,7 +45,7 @@ public class Student implements java.io.Serializable {
 	private int year;
 	
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH})
-	@JoinColumn(name = "group_id")
+	@JoinColumn(name = "group_id", nullable=false)
 	private StudentGroup studentGroup;
 	
 	
@@ -53,8 +53,6 @@ public class Student implements java.io.Serializable {
 	Set<Grade> grades;
 	
 
-	
-	
 
 	public int getId() {
 		return id;

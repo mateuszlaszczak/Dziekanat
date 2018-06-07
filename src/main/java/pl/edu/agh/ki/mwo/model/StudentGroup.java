@@ -63,8 +63,7 @@ public class StudentGroup implements java.io.Serializable {
 		this.studList = studList;
 	}
 
-	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH,CascadeType.REMOVE,CascadeType.ALL}, mappedBy="studentGroup")
-//	@JoinColumn(name = "group_id")
+	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH,CascadeType.REMOVE}, mappedBy="studentGroup")
 	private Set <Student> studList;
 	
 	

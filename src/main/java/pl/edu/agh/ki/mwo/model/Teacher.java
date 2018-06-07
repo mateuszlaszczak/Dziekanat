@@ -21,8 +21,7 @@ public class Teacher implements java.io.Serializable {
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	@Column(name="name")
@@ -31,9 +30,33 @@ public class Teacher implements java.io.Serializable {
 	@Column(name="surname")
 	private String surname;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+
+
 	@Column(name="email")
 	private String email;
 	
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+
+
+
+
+
 	@OneToMany(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "teacher")
 	Set<Course> courses;
 	
