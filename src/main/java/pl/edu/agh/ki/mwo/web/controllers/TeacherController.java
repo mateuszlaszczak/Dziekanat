@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.edu.agh.ki.mwo.model.StudentGroup;
+import pl.edu.agh.ki.mwo.model.Teacher;
+import pl.edu.agh.ki.mwo.model.Course;
 import pl.edu.agh.ki.mwo.model.DegreeCourse;
 import pl.edu.agh.ki.mwo.model.Grade;
 import pl.edu.agh.ki.mwo.model.Student;
@@ -26,129 +28,133 @@ public class TeacherController {
         return "teacherList";    
     }
 	
+	
+	
 
 	
     
-//    @RequestMapping(value="/AddStudent")
-//    public String addStudent(Model model, HttpSession session) {    	
-//    	if (session.getAttribute("userLogin") == null)
-//    		return "redirect:/Login";
-//    	
-//    	model.addAttribute("studentGroups", DatabaseConnector.getInstance().getSchoolClasses());
-//    	model.addAttribute("courseDegrees", DatabaseConnector.getInstance().getSchools());
-//        return "studentForm";    
-//    }
+    @RequestMapping(value="/AddTeacher")
+    public String addTeacher(Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+        return "teacherForm";    
+    }
 //    
 //    
 //    
-//    @RequestMapping(value="/ModifyStudent")
-//   public String modifyStudent(@RequestParam(value="studentId", required=false) String studentId, 
-//    		Model model, HttpSession session) {    	
-//    	if (session.getAttribute("userLogin") == null)
-//    		return "redirect:/Login";
-//    	
-//    	Student student = DatabaseConnector.getInstance().getStudent(studentId);
-//    	model.addAttribute("studentName", student.getName());
-//    	model.addAttribute("studentSurname", student.getSurname());
-//    	model.addAttribute("studentAdress", student.getAdress());
-//    	model.addAttribute("studentDateOfBirth", student.getDateOfBirth());
-//    	model.addAttribute("studentYear", student.getYear());
-//    	model.addAttribute("studentId",student.getId());
-//    	model.addAttribute("schoolClassStudent", DatabaseConnector.getInstance().getSpecificStudentClass(studentId));
-//    	model.addAttribute("studentGroups", DatabaseConnector.getInstance().getGroupBasedOnCourseDagree(student.getStudentGroup().getDegreeCourse().getId()));
-//        
-//    	return "studentModForm";
-//    }
+    @RequestMapping(value="/ModifyTeacher")
+   public String modifyStudent(@RequestParam(value="teacherId", required=false) String teacherId, 
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	Teacher teacher = DatabaseConnector.getInstance().getTeacher(teacherId);
+    	model.addAttribute("teacherName", teacher.getName());
+    	model.addAttribute("teacherSurname", teacher.getSurname());
+    	model.addAttribute("teacherEmail", teacher.getEmail());
+    	model.addAttribute("teacherId",teacher.getId());
+        
+    	return "teacherModForm";
+    }
 //    
     @RequestMapping(value="/teacherCourse")
-   public String showMarks(@RequestParam(value="studentId", required=false) String teacherId, 
+   public String showMarks(@RequestParam(value="teacherId", required=false) String teacherId, 
     		Model model, HttpSession session) {    	
     	if (session.getAttribute("userLogin") == null)
     		return "redirect:/Login";
     	
     	model.addAttribute("courses", DatabaseConnector.getInstance().getTeacherCourse(teacherId));
-    	System.out.println("ROZMIAR "+DatabaseConnector.getInstance().getTeacherCourse(teacherId));
     	return "teacherCourse";
     }
 ////    
-//    @RequestMapping(value="/SaveStudent", method=RequestMethod.POST)
-//    public String saveStudent(@RequestParam(value="studentName", required=false) String name,
-//    		@RequestParam(value="studentSurname", required=false) String surname,
-//    		@RequestParam(value="studentAdress", required=false) String adress,
-//    		@RequestParam(value="studentDateOfBirth",required=false)  String dateOfBirth,
-//    		@RequestParam(value="studentYear", required=false) int year,
-//    		@RequestParam(value="studentId", required=false) String studentId,
-//    		@RequestParam(value="studentGroups", required=false) StudentGroup group,
-//    		@RequestParam(value="studentDegreeGroupName", required=false) String studentGroupId,
-//    		
-//    		
-//    		Model model, HttpSession session) {    	
-//    	if (session.getAttribute("userLogin") == null)
-//    		return "redirect:/Login";
-//    	
-//    	
-//    	Student student = DatabaseConnector.getInstance().getStudent(studentId);
-//    
-//    	student.setName(name);
-//    	student.setSurname(surname);
-//    	student.setAdress(adress);
-//    	student.setDateOfBirth(dateOfBirth);
-//    	student.setStudentGroup(group);
-//    	student.setYear(year);
-//    	
-//    	   
-//    	DatabaseConnector.getInstance().addStudent(student, studentGroupId);
-//       	model.addAttribute("students", DatabaseConnector.getInstance().getStudents());
-//    	model.addAttribute("message", "Dane studenta zostały zapisane");
-//         	
-//    	return "studentList";
-//    }
+    @RequestMapping(value="/SaveTeacher", method=RequestMethod.POST)
+    public String saveTeacher(@RequestParam(value="teacherName", required=false) String name,
+    		@RequestParam(value="teacherSurname", required=false) String surname,
+    		@RequestParam(value="teacherEmail", required=false) String email,
+    		@RequestParam(value="teacherId", required=false) String teacherId,
+    		
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	
+    	Teacher teacher = DatabaseConnector.getInstance().getTeacher(teacherId);
+    
+    	teacher.setName(name);
+    	teacher.setSurname(surname);
+    	teacher.setEmail(email);
+    	
+    	   
+    	DatabaseConnector.getInstance().addTeacher(teacher);
+       	model.addAttribute("teachers", DatabaseConnector.getInstance().getTeachers());
+    	model.addAttribute("message", "Dane wykładowcy zostały zapisane");
+         	
+    	return "teacherList";
+    }
 ////    
 ////    
-////
-//    @RequestMapping(value="/CreateStudent", method=RequestMethod.POST)
-//    public String createStudent(@RequestParam(value="studentName", required=false) String name,
-//    		@RequestParam(value="studentSurname", required=false) String surname,
-//    		@RequestParam(value="studentAdress", required=false) String adress,
-//    		@RequestParam(value="studentDateOfBirth",required=false)  String dateOfBirth,
-//    		@RequestParam(value="studentYear", required=false) int year,
-//    		@RequestParam(value="studentDegreeGroupName", required=false) String studentGroupId,
-////    		@RequestParam(value="studentDegreeName", required=false) String studentDegree,
-//    		Model model, HttpSession session) {    	
-//    	if (session.getAttribute("userLogin") == null)
-//    		return "redirect:/Login";
-//    	
-//    	
-//    	
-//    	Student student = new Student(name, surname, adress, dateOfBirth, year);
-//    	
-//    	
-//    	System.out.println("Aj DI: " +studentGroupId);
-//    	DatabaseConnector.getInstance().addStudent(student, studentGroupId);
-//    	//DatabaseConnector.getInstance().getSpecificSchool(studentDegree).addGroup(group);;
-//    	   
-//    	
-//       	model.addAttribute("students", DatabaseConnector.getInstance().getStudents());
-//    	model.addAttribute("message", "Nowa uczen zostal dodany");
-//         	
-//    	return "studentList";
-//    }
-////    
-////
-////    
-////    
-////    
-//    @RequestMapping(value="/DeleteStudent", method=RequestMethod.POST)
-//    public String deleteStudent(@RequestParam(value="studentId", required=false) String studentId,
-//    		Model model, HttpSession session) {    	
-//    	if (session.getAttribute("userLogin") == null)
-//    		return "redirect:/Login";
-//    	
-//    	DatabaseConnector.getInstance().deleteStudent(studentId);  	
-//       	model.addAttribute("students", DatabaseConnector.getInstance().getStudents());
-//    	model.addAttribute("message", "Student został usunięty");
-//         	
-//    	return "studentList";
-//    }
+//
+    @RequestMapping(value="/CreateTeacher", method=RequestMethod.POST)
+    public String createStudent(@RequestParam(value="teacherName", required=false) String name,
+    		@RequestParam(value="teacherSurname", required=false) String surname,
+    		@RequestParam(value="teacherEmail", required=false) String email,
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	Teacher teacher = new Teacher();
+    	
+    	teacher.setName(name);
+    	teacher.setSurname(surname);
+    	teacher.setEmail(email);
+    	
+    	DatabaseConnector.getInstance().addTeacher(teacher);
+    	   
+    	
+       	model.addAttribute("teachers", DatabaseConnector.getInstance().getTeachers());
+    	model.addAttribute("message", "Nowy wykładowca zostal dodany");
+         	
+    	return "teacherList";
+    }
+
+    
+    @RequestMapping(value="/DeleteTeacher", method=RequestMethod.POST)
+    public String deleteTeacher(@RequestParam(value="teacherId", required=false) String teacherId,
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	DatabaseConnector.getInstance().deleteTeacher(teacherId);  	
+       	model.addAttribute("teachers", DatabaseConnector.getInstance().getTeachers());
+    	model.addAttribute("message", "Nauczyciel został usunięty");
+         	
+    	return "teacherList";
+    }
+    
+    
+    @RequestMapping(value="/AddCourse")
+    public String addCourse(Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	model.addAttribute("courses", DatabaseConnector.getInstance().getCourses());
+        return "courseForm";    
+    }
+    
+    @RequestMapping(value="/SaveTeacherCourse")
+    public String saveTeacherCourse(
+    		@RequestParam(value="teacherId", required=false) String teacherId, 
+    		@RequestParam(value="allCourses", required=false) String courseId,
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	teacherId = "1";
+    	DatabaseConnector.getInstance().addCourseToTeacher(teacherId, courseId);
+    	
+    	model.addAttribute("teachers", DatabaseConnector.getInstance().getTeachers());
+        return "teacherList";    
+    }
+    
+    
 
 }

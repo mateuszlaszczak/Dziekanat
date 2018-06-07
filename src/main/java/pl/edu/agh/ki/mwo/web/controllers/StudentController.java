@@ -149,5 +149,31 @@ public class StudentController {
          	
     	return "studentList";
     }
+    
+    @RequestMapping(value="/AddGrade")
+    public String addGrade(
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	model.addAttribute("courses", DatabaseConnector.getInstance().getCourses());
+
+        return "gradeForm";    
+    }
+    
+    @RequestMapping(value="/SaveStudentGrade", method=RequestMethod.POST)
+    public String saveStudentGrade(
+    		@RequestParam(value="studentId", required=false) String studentId,
+    		@RequestParam(value="allCourses", required=false) String courseId,
+    		@RequestParam(value="studentGrade", required=false) String studentGrade,
+    		Model model, HttpSession session) {    	
+    	if (session.getAttribute("userLogin") == null)
+    		return "redirect:/Login";
+    	
+    	DatabaseConnector.getInstance().addGradeToStudent(studentId, courseId, studentGrade); 	
+       	model.addAttribute("students", DatabaseConnector.getInstance().getStudents());
+    	model.addAttribute("message", "Ocena została dodana");
+         	
+    	return "studentList";
+    }
 
 }

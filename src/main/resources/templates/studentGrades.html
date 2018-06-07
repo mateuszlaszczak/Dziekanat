@@ -16,10 +16,10 @@
 				<td><span th:text="${grade.course.name}" /></td>
 				<td><span th:text="${grade.course.teacher.name+' '+grade.course.teacher.surname}" /></td>
 				<td><span th:text="${grade.mark}" /></td>
-				<!-- <td><span th:text="none"/></td> -->
+				
 			</tr>
 		
-		
+		<input type="hidden" name="studentId" th:value="${studentId}" />
 		</table><br/><a href='AddGrade'>Dodaj ocene</a><br/><br/>
 		
     </div>

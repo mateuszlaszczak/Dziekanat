@@ -1,5 +1,6 @@
 package pl.edu.agh.ki.mwo.model;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,6 +97,12 @@ public class Teacher implements java.io.Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
+	}
+	
+	public void addCourse(Course course) {
+		this.courses = new HashSet<>();
+		this.courses.add(course);
+		course.setTeacher(this);
 	}
 	
 

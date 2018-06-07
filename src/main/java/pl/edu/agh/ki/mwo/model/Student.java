@@ -1,4 +1,5 @@
 package pl.edu.agh.ki.mwo.model;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -110,6 +111,13 @@ public class Student implements java.io.Serializable {
 		this.studentGroup = studentGroup;
 	}
 	
+	
+	public void addGrade(Course course, Student student, Grade grade) {
+		grades = new HashSet<>();
+		grades.add(grade);
+		grade.setCourse(course);
+		grade.setStudent(this);
+	}
 	
 	
 

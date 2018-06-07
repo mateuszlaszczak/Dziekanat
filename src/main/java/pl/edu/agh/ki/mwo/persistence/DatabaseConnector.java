@@ -215,10 +215,77 @@ public class DatabaseConnector {
 	}
 
 	public Iterable<Course> getTeacherCourse(String teacherId) {
-		String hql = "SELECT S FROM Course INNER JOIN S.teacher teach WHERE teach.id = 1";
+		String hql = "select s from Course s INNER JOIN s.teacher teach where teach.id="+teacherId;
+		Query query = session.createQuery(hql);
+		List <Course> courses = query.list();
+		courses.forEach(e->System.out.println(e.getName()));
+		return courses;
+	}
+	
+	public Teacher getTeacher(String teacherId) {
+		String hql = "FROM Teacher S WHERE S.id="+teacherId;
+		Query query = session.createQuery(hql);
+		List<Teacher> results = query.list();
+		return results.get(0);
+	}
+	
+	public void addTeacher(Teacher teacher) {
+		Transaction transaction = session.beginTransaction();
+		session.save(teacher);
+		transaction.commit();
+	}
+	
+	public void deleteTeacher(String teacherId) {
+		String hql = "FROM Teacher S WHERE S.id=" + teacherId;
+		Query query = session.createQuery(hql);
+		List<Teacher> results = query.list();
+		Transaction transaction = session.beginTransaction();
+		for (Teacher s : results) {
+			session.delete(s);
+		}
+		transaction.commit();
+	}
+	
+	
+	//Courses
+	public Iterable<Course> getCourses() {
+		String hql = "FROM Course";
 		Query query = session.createQuery(hql);
 		List <Course> courses = query.list();
 		return courses;
+	}
+	
+	public Course getSpecificCourse(String courseId) {
+		String hql = "from Course s where s.id="+courseId;
+		Query query = session.createQuery(hql);
+		return (Course) query.list().get(0);
+		
+	}
+
+	public void addCourseToTeacher(String teacherId, String courseId) {
+		Transaction transaction = session.beginTransaction();
+		Teacher teacher = DatabaseConnector.getInstance().getTeacher(teacherId);
+		System.out.println("Nauczyciel "+teacher.getName());
+		Course course = getSpecificCourse(courseId);
+		System.out.println("KURS " + course.getName());
+		teacher.addCourse(course);
+		transaction.commit();
+	}
+
+	public void addGradeToStudent(String studentId, String courseId, String studentGrade) {
+		Transaction transaction = session.beginTransaction();
+		Grade grade = new Grade();
+		grade.setMark(Double.parseDouble(studentGrade));
+		Student student = getStudent(studentId);
+		Course course = getSpecificCourse(courseId);
+		student.addGrade(course, student, grade);
+		
+		System.out.println("STUDENT: "+student.getName());
+		System.out.println("OCENA "+studentGrade);
+		System.out.println("PRZEDMIOT " +course.getName() );
+		session.save(grade);
+		transaction.commit();
+		
 	}
 	
 	

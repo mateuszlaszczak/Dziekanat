@@ -20,14 +20,14 @@ public class Course implements java.io.Serializable{
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int Id;
 	
 	@Column
 	private String name;
 	
 	@ManyToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-	@JoinColumn(name = "teacher_id",nullable=true)
+	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 
 	public void setTeacher(Teacher teacher) {

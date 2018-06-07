@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+
+    <div layout:fragment="content">
+    <div th:include="menuFragment" ></div>
+    	<br/><br/>
+	   			<form action="SaveStudentGrade" method="POST">
+					<table>
+							<tr><td>Ocena:</td><td><input type="text" name="studentGrade" th:value="${studentGrade}"/></td></tr>
+							<tr><td>Przedmioty:</td><td><select class="form-control" name="allCourses" id="allCourses">
+									<option value="-1">---</option>
+									<option th:each="course: ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+														</select></td></tr>
+							
+					</table><br/><BR/>
+					<input type="submit" value="Utwórz"/>
+				</form>
+    </div>
+
+</body>
+</html>
