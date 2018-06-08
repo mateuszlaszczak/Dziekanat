@@ -148,7 +148,6 @@ public class TeacherController {
     		Model model, HttpSession session) {    	
     	if (session.getAttribute("userLogin") == null)
     		return "redirect:/Login";
-    	teacherId = "1";
     	DatabaseConnector.getInstance().addCourseToTeacher(teacherId, courseId);
     	
     	model.addAttribute("teachers", DatabaseConnector.getInstance().getTeachers());
